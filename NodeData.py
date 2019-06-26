@@ -4,6 +4,7 @@ class NodeData(dict):
     NODE_DATA_ATTRIBUTE_NAME = 'nodeDataDict'
     def __init__(self, node):
         self.node = pm.PyNode(node)
+        
         current_dict = eval(self._data_attribute.get())
         for k, v in current_dict.items():
             self.__setitem__(k,v)
