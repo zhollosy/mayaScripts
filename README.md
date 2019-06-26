@@ -1,7 +1,7 @@
 # mayaScripts
 Python scripts for Autodesk Maya
 
-# [NodeData.py](NodeData/nodeData.py)
+# [NodeData.py](blob/master/NodeData.p)
 ```
 aa = NodeData('pSphereShape1')
 aa['aa'] = 11
