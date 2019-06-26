@@ -2,10 +2,17 @@ import pymel.core as pm
 
 class NodeData(dict):
     NODE_DATA_ATTRIBUTE_NAME = 'nodeDataDict'
-    def __init__(self, node):
-        self.node = pm.PyNode(node)
+    def __init__(self, *args):
+        node = [att for att in args if isinstance(att, (pm.PyNode, str))][0]
+        dict_init = [att for att in args if isinstance(att, dict)]
         
-        current_dict = eval(self._data_attribute.get())
+        self.node = pm.PyNode(node)
+
+        if dict_init:
+            current_dict = dict_init[0]
+        else:
+            current_dict = eval(self._data_attribute.get())
+
         for k, v in current_dict.items():
             self.__setitem__(k,v)
 
