@@ -2,6 +2,7 @@
 Python scripts for Autodesk Maya
 
 # [NodeData.py](/NodeData.py)
+Stores information in the node's string attribute. Helps adding and removing stored data.
 
 Initialize with a dictionary:
 ```
