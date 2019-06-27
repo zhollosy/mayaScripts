@@ -26,7 +26,7 @@ class NodeData(dict):
 
     def __getitem__(self, key):
         self._setNodeAttribute()
-        return self[key]
+        return super(NodeData, self).__getitem__(key)
 
     def __setitem__(self, key, value):
         super(NodeData, self).__setitem__(key, value)
@@ -40,11 +40,11 @@ class NodeData(dict):
         self._data_attribute.unlock()
         self._data_attribute.set(self.__str__())
         self._data_attribute.lock()
-        
+
     def clear(self):
         super(NodeData, self).clear()
         self._setNodeAttribute()
-        
+
     def update(self, *args, **kwargs):
         super(NodeData, self).update(*args, **kwargs)
         self._setNodeAttribute()
