@@ -17,3 +17,12 @@ aa['aa'] = 11
 aa['bb'] = 22
 del aa['aa']
 ```
+
+Update dictionary:
+```
+d = {'asd': 3123, '33': 'sdfsd'}
+d2 = {'asdd': 31223, '332': 'sdfsdxxx'}
+
+ddd = NodeData('pCircle1Shape', d)
+ddd.update(d2)
+```
