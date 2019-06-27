@@ -2,7 +2,7 @@ import pymel.core as pm
 
 class NodeData(dict):
     NODE_DATA_ATTRIBUTE_NAME = 'nodeDataDict'
-    def __init__(self, *args):
+    def __init__(self, *args, **kwargs):
         node = [arg for arg in args if isinstance(arg, (pm.PyNode, str))][0]
         dict_init = [arg for arg in args if isinstance(arg, dict)]
         
@@ -13,8 +13,7 @@ class NodeData(dict):
         else:
             current_dict = eval(self._data_attribute.get())
 
-        for k, v in current_dict.items():
-            self.__setitem__(k,v)
+        self.update(current_dict)
 
     @property
     def _data_attribute(self):
@@ -26,7 +25,8 @@ class NodeData(dict):
         return pm.Attribute('{}.{}'.format(self.node, self.NODE_DATA_ATTRIBUTE_NAME))
 
     def __getitem__(self, key):
-        return eval(self._data_attribute.get())[key]
+        self._setNodeAttribute()
+        return self[key]
 
     def __setitem__(self, key, value):
         super(NodeData, self).__setitem__(key, value)
@@ -40,3 +40,11 @@ class NodeData(dict):
         self._data_attribute.unlock()
         self._data_attribute.set(self.__str__())
         self._data_attribute.lock()
+        
+    def clear(self):
+        super(NodeData, self).clear()
+        self._setNodeAttribute()
+        
+    def update(self, *args, **kwargs):
+        super(NodeData, self).update(*args, **kwargs)
+        self._setNodeAttribute()
