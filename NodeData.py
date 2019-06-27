@@ -1,3 +1,4 @@
+from functools import wraps
 import pymel.core as pm
 
 class NodeData(dict):
@@ -15,6 +16,14 @@ class NodeData(dict):
 
         self.update(current_dict)
 
+    def _updateNode(f):
+        @wraps(f)
+        def wrapped(inst, *args, **kwargs):
+            res = f(inst, *args, **kwargs)
+            inst._setNodeAttribute()
+            return res 
+        return wrapped
+
     @property
     def _data_attribute(self):
         if not pm.attributeQuery(self.NODE_DATA_ATTRIBUTE_NAME, node=self.node, exists=True):
@@ -28,23 +37,23 @@ class NodeData(dict):
         self._setNodeAttribute()
         return super(NodeData, self).__getitem__(key)
 
+    @_updateNode
     def __setitem__(self, key, value):
         super(NodeData, self).__setitem__(key, value)
-        self._setNodeAttribute()
-        
+    
+    @_updateNode
     def __delitem__(self, key):
         super(NodeData, self).__delitem__(key)
-        self._setNodeAttribute()
+
+    @_updateNode
+    def clear(self):
+        super(NodeData, self).clear()
+
+    @_updateNode
+    def update(self, *args, **kwargs):
+        super(NodeData, self).update(*args, **kwargs)
 
     def _setNodeAttribute(self):
         self._data_attribute.unlock()
         self._data_attribute.set(self.__str__())
         self._data_attribute.lock()
-
-    def clear(self):
-        super(NodeData, self).clear()
-        self._setNodeAttribute()
-
-    def update(self, *args, **kwargs):
-        super(NodeData, self).update(*args, **kwargs)
-        self._setNodeAttribute()
