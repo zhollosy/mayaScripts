@@ -3,8 +3,8 @@ import pymel.core as pm
 class NodeData(dict):
     NODE_DATA_ATTRIBUTE_NAME = 'nodeDataDict'
     def __init__(self, *args):
-        node = [att for att in args if isinstance(att, (pm.PyNode, str))][0]
-        dict_init = [att for att in args if isinstance(att, dict)]
+        node = [arg for arg in args if isinstance(arg, (pm.PyNode, str))][0]
+        dict_init = [arg for arg in args if isinstance(arg, dict)]
         
         self.node = pm.PyNode(node)
 
