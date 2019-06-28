@@ -30,11 +30,11 @@ ddd.update(d2)
 Update attribute name:
 ```
 import pymel.core as pm
-for i in pm.ls('*.oldAttribName'):
+for attr in pm.ls('*.oldAttribName'):
     NodeData.NODE_DATA_ATTRIBUTE_NAME = 'oldAttribName'
-    d = NodeData(i.node())
+    d = NodeData(attr.node())
     NodeData.NODE_DATA_ATTRIBUTE_NAME = 'nodeDataDict'
     d.update()
-    i.unlock()
-    pm.deleteAttr(i)
+    attr.unlock()
+    pm.deleteAttr(attr)
 ```
