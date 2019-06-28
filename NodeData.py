@@ -33,8 +33,8 @@ class NodeData(dict):
 
         return pm.Attribute('{}.{}'.format(self.node, self.NODE_DATA_ATTRIBUTE_NAME))
 
+    @_updateNode
     def __getitem__(self, key):
-        self._setNodeAttribute()
         return super(NodeData, self).__getitem__(key)
 
     @_updateNode
